@@ -11,7 +11,7 @@
             --surface-dark: #0a0a0a;
             --surface-light: #121212;
             --border-subtle: rgba(255, 255, 255, 0.08);
-            --accent-primary: #e11d48; 
+            --accent-primary: #e11d48;
             --accent-glow: rgba(225, 29, 72, 0.5);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
@@ -73,7 +73,7 @@
         .hero h1 { font-size: clamp(2.8rem, 8vw, 6.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 32px; max-width: 1100px; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .hero p { font-size: clamp(1.1rem, 4vw, 1.25rem); color: var(--text-secondary); max-width: 680px; margin-bottom: 64px; font-weight: 400; }
         
-        /* The Studio Banner Cover (2056x1080 Aspect Ratio) */
+        /* The Studio Banner Cover */
         .studio-banner { width: 100%; max-width: 1400px; margin: 0 auto; perspective: 1000px; }
         .banner-img {
             width: 100%; aspect-ratio: 2056 / 1080;
@@ -161,7 +161,7 @@
 
         .footer-bottom { border-top: 1px solid var(--border-subtle); padding-top: 40px; display: flex; justify-content: space-between; color: var(--text-secondary); font-size: 0.9rem; max-width: 1400px; margin: 0 auto; font-weight: 600; }
 
-        /* --- Dynamic UI Modal (Glassmorphism) --- */
+        /* --- Dynamic UI Modal (Glassmorphism + Grid Layout) --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
@@ -179,17 +179,27 @@
         .modal-overlay.active .modal-box { transform: translateY(0); }
         .modal-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; }
         .modal-desc { color: var(--text-secondary); margin-bottom: 32px; font-size: 1rem; line-height: 1.6; }
-        .modal-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        
+        /* New Button Grid Layout */
+        .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .m-btn {
-            padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 0.95rem;
-            cursor: pointer; border: none; outline: none; transition: all 0.2s ease; flex: 1; min-width: 120px;
+            padding: 14px 20px; border-radius: 8px; font-weight: 700; font-size: 0.95rem;
+            cursor: pointer; border: none; outline: none; transition: all 0.2s ease;
+            display: flex; justify-content: center; align-items: center;
         }
-        .m-btn-cancel { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-primary); }
-        .m-btn-cancel:hover { background: rgba(255,255,255,0.05); }
-        .m-btn-primary { background: var(--text-primary); color: var(--bg-base); }
-        .m-btn-primary:hover { background: #e2e8f0; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
-        .m-btn-accent { background: var(--accent-primary); color: white; }
-        .m-btn-accent:hover { background: #be123c; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(225, 29, 72, 0.2); }
+        .m-btn-full { grid-column: span 2; }
+        
+        .m-btn-cancel { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary); }
+        .m-btn-cancel:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+        
+        .m-btn-steam { background: #2a475e; color: #f8fafc; border: 1px solid #171a21; }
+        .m-btn-steam:hover { background: #171a21; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        
+        .m-btn-itch { background: var(--accent-primary); color: white; border: 1px solid #be123c; }
+        .m-btn-itch:hover { background: #be123c; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(225, 29, 72, 0.2); }
+
+        .m-btn-external { background: var(--text-primary); color: var(--bg-base); }
+        .m-btn-external:hover { background: #e2e8f0; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
 
         /* --- Intersection Observer Animations --- */
         .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
@@ -203,8 +213,8 @@
             .studio-banner { margin-top: 40px; }
             .services-header { text-align: left; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
-            .modal-actions { flex-direction: column; }
-            .m-btn { width: 100%; }
+            .modal-actions { grid-template-columns: 1fr; }
+            .m-btn-full { grid-column: span 1; }
         }
     </style>
 </head>
@@ -279,7 +289,7 @@
                 </div>
             </div>
 
-            <div class="project-card reveal multi-platform-link" data-steam="https://store.steampowered.com/app/3144440/Reaper_Rules/" data-itch="https://finaltime-game-studio.itch.io/reaper-rules">
+            <div class="project-card reveal multi-platform-link" data-steam="https://store.steampowered.com/app/3144440/Reaper_Rules/" data-itch="reaper-rules">
                 <div class="img-wrapper"><div class="card-image" style="background-image: url('assets/reaperrules.jpg');"></div></div>
                 <div class="card-content">
                     <span class="card-category">Game</span>
@@ -288,7 +298,7 @@
                 </div>
             </div>
 
-            <div class="project-card reveal multi-platform-link" data-steam="https://store.steampowered.com/app/4187910/Dash_Duels/" data-itch="https://finaltime-game-studio.itch.io/dash-duels">
+            <div class="project-card reveal multi-platform-link" data-steam="https://store.steampowered.com/app/4187910/Dash_Duels/" data-itch="dash-duels">
                 <div class="img-wrapper"><div class="card-image" style="background-image: url('assets/dashduels.jpg');"></div></div>
                 <div class="card-content">
                     <span class="card-category">Game</span>
@@ -454,7 +464,7 @@
         function openModal(title, desc, buttons) {
             mTitle.textContent = title;
             mDesc.textContent = desc;
-            mActions.innerHTML = ''; // Clear old buttons
+            mActions.innerHTML = ''; 
             
             buttons.forEach(btn => {
                 const b = document.createElement('button');
@@ -474,25 +484,41 @@
             modal.classList.remove('active');
         }
 
-        // Close on background click
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
         });
 
-        // --- 2.1 Multi-Platform Links (Reaper & Dash) ---
+        // --- 2.1 Multi-Platform Links (Steam / Itch.io API Injection) ---
+        // Hidden anchor used to programmatically trigger Itch.io Popups
+        function triggerItchPopup(slug) {
+            let hiddenBtn = document.getElementById('hidden-itch-trigger');
+            if (!hiddenBtn) {
+                hiddenBtn = document.createElement('a');
+                hiddenBtn.id = 'hidden-itch-trigger';
+                hiddenBtn.style.display = 'none';
+                document.body.appendChild(hiddenBtn);
+            }
+            // Clone to remove previous Itch.io listeners
+            let newBtn = hiddenBtn.cloneNode(true);
+            hiddenBtn.parentNode.replaceChild(newBtn, hiddenBtn);
+            
+            Itch.attachBuyButton(newBtn, { ...baseConfig, game: slug });
+            newBtn.click();
+        }
+
         document.querySelectorAll('.multi-platform-link').forEach(card => {
             card.addEventListener('click', (e) => {
                 e.preventDefault();
                 const steamUrl = card.getAttribute('data-steam');
-                const itchUrl = card.getAttribute('data-itch');
+                const itchSlug = card.getAttribute('data-itch'); // We grab the slug now, not the full URL
                 
                 openModal(
                     "Select Platform",
-                    "Where would you like to access this title?",
+                    "Choose where you want to access this project.",
                     [
-                        { text: "Cancel", class: "m-btn-cancel" },
-                        { text: "Steam", class: "m-btn-primary", action: () => window.open(steamUrl, '_blank') },
-                        { text: "Itch.io", class: "m-btn-accent", action: () => window.open(itchUrl, '_blank') }
+                        { text: "Steam", class: "m-btn-steam", action: () => window.open(steamUrl, '_blank') },
+                        { text: "Itch.io", class: "m-btn-itch", action: () => triggerItchPopup(itchSlug) },
+                        { text: "Cancel", class: "m-btn-cancel m-btn-full" }
                     ]
                 );
             });
@@ -508,8 +534,8 @@
                     "Leaving Finaltime Studios",
                     "You are about to access a live interactive project in a new tab. Do you wish to proceed?",
                     [
-                        { text: "Cancel", class: "m-btn-cancel" },
-                        { text: "Proceed", class: "m-btn-primary", action: () => window.open(url, '_blank') }
+                        { text: "Cancel", class: "m-btn-cancel m-btn-full" },
+                        { text: "Proceed to Project", class: "m-btn-external m-btn-full", action: () => window.open(url, '_blank') }
                     ]
                 );
             });
