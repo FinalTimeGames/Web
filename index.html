@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finaltime Studios | From noise, we forge digital experiences.</title>
+    <title>Finaltime Studios | Forging Digital Experiences</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-base: #030303;
             --surface-dark: #0a0a0a;
             --surface-light: #121212;
-            --border-subtle: rgba(255, 255, 255, 0.06);
-            --accent-primary: #e11d48;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --accent-primary: #e11d48; /* Crimson / Red */
+            --accent-glow: rgba(225, 29, 72, 0.5);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
-            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -27,14 +28,14 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Abstract Noise Background */
+        /* --- Abstract Noise Background --- */
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');
             opacity: 0.035; z-index: -1; pointer-events: none;
         }
 
-        /* Ambient Glows */
+        /* --- Ambient Glows --- */
         .bg-glow {
             position: fixed; top: -10%; left: -10%; width: 40vw; height: 40vw;
             background: radial-gradient(circle, rgba(225, 29, 72, 0.08) 0%, transparent 60%);
@@ -46,131 +47,162 @@
             filter: blur(100px); z-index: -1; pointer-events: none;
         }
 
-        /* Navigation */
+        /* --- Navigation --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 24px 8%; position: fixed; width: 100%; top: 0;
-            background: rgba(3, 3, 3, 0.5); backdrop-filter: blur(16px); z-index: 100;
+            background: rgba(3, 3, 3, 0.4); backdrop-filter: blur(16px); z-index: 100;
             border-bottom: 1px solid transparent;
             transition: var(--transition-smooth);
         }
-        nav.scrolled { padding: 16px 8%; background: rgba(3, 3, 3, 0.9); border-bottom: 1px solid var(--border-subtle); }
-        .logo-container { display: flex; flex-direction: column; }
-        .logo { font-size: 1.4rem; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; }
-        .logo-sub { font-size: 0.6rem; letter-spacing: 4px; color: var(--text-secondary); text-transform: uppercase; margin-top: 2px;}
+        nav.scrolled { padding: 16px 8%; background: rgba(3, 3, 3, 0.85); border-bottom: 1px solid var(--border-subtle); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .logo-container { display: flex; flex-direction: column; cursor: pointer; }
+        .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; }
+        .logo-sub { font-size: 0.65rem; letter-spacing: 5px; color: var(--text-secondary); text-transform: uppercase; margin-top: 0px;}
         
         .nav-links { display: flex; gap: 32px; }
         .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         .nav-links a:hover { color: var(--text-primary); }
 
-        /* Hero Section */
+        /* --- Hero Section --- */
         .hero {
             display: flex; flex-direction: column; align-items: center; text-align: center;
-            padding: 180px 5% 80px; position: relative; width: 100%;
+            padding: 200px 5% 80px; position: relative; width: 100%;
         }
-        .hero-date { font-size: 0.8rem; font-weight: 600; color: var(--accent-primary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
-        .hero h1 { font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -3px; margin-bottom: 32px; max-width: 1100px; }
-        .hero p { font-size: 1.25rem; color: var(--text-secondary); max-width: 650px; margin-bottom: 48px; font-weight: 300; }
+        .hero-date { font-size: 0.85rem; font-weight: 700; color: var(--accent-primary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+        .hero h1 { font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -3px; margin-bottom: 32px; max-width: 1100px; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.25rem; color: var(--text-secondary); max-width: 680px; margin-bottom: 64px; font-weight: 400; }
         
         /* The Studio Banner Cover (2056x1080 Aspect Ratio) */
-        .studio-banner {
-            width: 100%; max-width: 1400px; margin: 0 auto; perspective: 1000px;
-        }
+        .studio-banner { width: 100%; max-width: 1400px; margin: 0 auto; perspective: 1000px; }
         .banner-img {
             width: 100%; aspect-ratio: 2056 / 1080;
             background-color: #111; background-size: cover; background-position: center;
-            background-image: url('assets/cover.jpg'); /* Your 2056x1080 image here */
+            background-image: url('assets/cover.jpg'); 
             border-radius: 24px; border: 1px solid var(--border-subtle);
             box-shadow: 0 40px 80px rgba(0,0,0,0.8);
-            transform: translateY(0); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(0) scale(1); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .banner-img:hover { transform: translateY(-10px); box-shadow: 0 50px 100px rgba(0,0,0,0.9); border-color: rgba(255,255,255,0.1); }
+        .banner-img:hover { transform: translateY(-10px) scale(1.01); box-shadow: 0 50px 100px rgba(0,0,0,0.9); border-color: rgba(255,255,255,0.15); }
 
-        /* Studio Intro */
+        /* --- Studio Intro --- */
         .studio-intro { padding: 120px 8%; background: var(--surface-dark); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
         .intro-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 64px; align-items: start; max-width: 1400px; margin: 0 auto; }
-        .intro-title { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; }
+        .intro-title { font-size: 3rem; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; }
         .intro-text { font-size: 1.2rem; color: var(--text-secondary); line-height: 1.8; }
         .intro-text strong { color: var(--text-primary); font-weight: 600; }
 
-        /* Highlighted Games (Steam) */
-        .steam-highlights { padding: 120px 8%; max-width: 1400px; margin: 0 auto; }
+        /* --- Highlighted Games (Steam) --- */
+        .steam-highlights { padding: 140px 8%; max-width: 1400px; margin: 0 auto; }
         .section-header { margin-bottom: 64px; }
-        .section-header h2 { font-size: 3rem; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 16px; }
-        .section-header p { color: var(--text-secondary); font-size: 1.1rem; }
+        .section-header h2 { font-size: 3.5rem; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 16px; }
+        .section-header p { color: var(--text-secondary); font-size: 1.15rem; font-weight: 400; }
         
         .steam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 40px; }
         .steam-wrapper { background: var(--surface-light); padding: 20px; border-radius: 16px; border: 1px solid var(--border-subtle); transition: var(--transition-smooth); }
-        .steam-wrapper:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .steam-wrapper:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.15); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
         .steam-wrapper iframe { width: 100%; height: 190px; border-radius: 8px; }
 
-        /* Portfolio Grid */
-        .portfolio { padding: 120px 8%; background: var(--surface-dark); }
+        /* --- Portfolio Grid --- */
+        .portfolio { padding: 140px 8%; background: var(--surface-dark); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(315px, 1fr)); gap: 32px; max-width: 1400px; margin: 0 auto; }
         
         .project-card {
-            background: var(--surface-light); border: 1px solid var(--border-subtle); border-radius: 12px; overflow: hidden;
+            background: var(--surface-light); border: 1px solid var(--border-subtle); border-radius: 16px; overflow: hidden;
             transition: var(--transition-smooth); cursor: pointer; display: flex; flex-direction: column;
-            text-decoration: none; color: inherit;
+            text-decoration: none; color: inherit; position: relative;
         }
-        .project-card:hover { transform: translateY(-8px); border-color: var(--accent-primary); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .project-card:hover { transform: translateY(-10px); border-color: rgba(255,255,255,0.2); box-shadow: 0 25px 50px rgba(0,0,0,0.6); }
         
-        /* STRICT IMAGE SIZING: 315x250 Enforced */
+        /* STRICT IMAGE SIZING: 315x250 */
+        .img-wrapper { overflow: hidden; width: 100%; aspect-ratio: 315 / 250; background-color: #111; border-bottom: 1px solid var(--border-subtle); }
         .card-image { 
-            width: 100%; 
-            aspect-ratio: 315 / 250; 
-            background-color: #111; 
-            background-size: cover; 
-            background-position: center; 
-            border-bottom: 1px solid var(--border-subtle); 
-            transition: transform 0.6s ease;
+            width: 100%; height: 100%;
+            background-size: cover; background-position: center; 
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .project-card:hover .card-image { transform: scale(1.05); }
-        .img-wrapper { overflow: hidden; } /* Prevents the scale from breaking border-radius */
+        .project-card:hover .card-image { transform: scale(1.08); }
         
         .card-content { padding: 32px 24px; display: flex; flex-direction: column; flex: 1; z-index: 2; background: var(--surface-light); }
-        .card-category { font-size: 0.7rem; font-weight: 800; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
-        .card-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 24px; letter-spacing: -0.5px; }
+        .card-category { font-size: 0.75rem; font-weight: 800; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+        .card-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 32px; letter-spacing: -0.5px; }
         
-        .card-btn { margin-top: auto; padding: 12px 0; text-align: center; background: transparent; border: 1px solid var(--border-subtle); color: var(--text-primary); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; border-radius: 6px; }
-        .project-card:hover .card-btn { background: var(--text-primary); color: var(--bg-base); }
+        .card-btn { 
+            margin-top: auto; padding: 14px 0; text-align: center; background: transparent; 
+            border: 1px solid var(--border-subtle); color: var(--text-primary); 
+            font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; 
+            transition: all 0.3s ease; border-radius: 8px; 
+        }
+        .project-card:hover .card-btn { background: var(--text-primary); color: var(--bg-base); border-color: var(--text-primary); }
 
-        /* Services / Architecture */
-        .services { padding: 160px 8%; max-width: 1400px; margin: 0 auto; text-align: center; }
-        .services-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; letter-spacing: -2px; margin-bottom: 24px; }
-        .services-desc { font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 64px; }
+        /* --- Services / Architecture --- */
+        .services { padding: 160px 8%; max-width: 1400px; margin: 0 auto; }
+        .services-header { text-align: center; margin-bottom: 80px; }
+        .services-title { font-size: clamp(3rem, 5vw, 4rem); font-weight: 900; letter-spacing: -2px; margin-bottom: 24px; }
+        .services-desc { font-size: 1.25rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
         
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; text-align: left; }
-        .service-item { padding: 40px; background: var(--surface-dark); border: 1px solid var(--border-subtle); border-radius: 12px; transition: var(--transition-smooth); }
-        .service-item:hover { background: var(--surface-light); border-color: rgba(255,255,255,0.15); transform: translateY(-5px); }
-        .service-num { font-size: 0.8rem; font-weight: 800; color: var(--accent-primary); margin-bottom: 16px; display: block; }
-        .service-item h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; }
-        .service-item p { color: var(--text-secondary); font-size: 0.95rem; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; text-align: left; }
+        .service-item { padding: 48px 40px; background: var(--surface-dark); border: 1px solid var(--border-subtle); border-radius: 16px; transition: var(--transition-smooth); }
+        .service-item:hover { background: var(--surface-light); border-color: rgba(255,255,255,0.15); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .service-num { font-size: 0.9rem; font-weight: 900; color: var(--accent-primary); margin-bottom: 20px; display: block; }
+        .service-item h3 { font-size: 1.6rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px;}
+        .service-item p { color: var(--text-secondary); font-size: 1rem; line-height: 1.7; }
 
-        /* Footer */
-        footer { border-top: 1px solid var(--border-subtle); padding: 80px 8% 40px; background: var(--surface-dark); }
+        /* --- Footer --- */
+        footer { border-top: 1px solid var(--border-subtle); padding: 100px 8% 40px; background: var(--surface-dark); }
         .footer-content { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; max-width: 1400px; margin: 0 auto 80px; }
-        .footer-brand h2 { font-size: 2rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 16px; }
-        .footer-brand p { color: var(--text-secondary); max-width: 400px; }
+        .footer-brand h2 { font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 16px; }
+        .footer-brand p { color: var(--text-secondary); max-width: 450px; font-size: 1.1rem;}
         
         .footer-links { display: flex; flex-direction: column; gap: 16px; align-items: flex-start;}
-        .footer-links span { font-size: 0.8rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        .footer-links span { font-size: 0.85rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
         .footer-links a { color: var(--text-primary); text-decoration: none; font-size: 1.1rem; font-weight: 600; transition: color 0.3s ease; }
         .footer-links a:hover { color: var(--accent-primary); }
 
-        .footer-bottom { border-top: 1px solid var(--border-subtle); padding-top: 40px; display: flex; justify-content: space-between; color: var(--text-secondary); font-size: 0.85rem; max-width: 1400px; margin: 0 auto; }
+        .footer-bottom { border-top: 1px solid var(--border-subtle); padding-top: 40px; display: flex; justify-content: space-between; color: var(--text-secondary); font-size: 0.9rem; max-width: 1400px; margin: 0 auto; font-weight: 600; }
 
-        /* Intersection Observer Animations */
+        /* --- Custom UI Modal (Glassmorphism) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; opacity: 0; pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-box {
+            background: var(--surface-light); border: 1px solid var(--border-subtle);
+            padding: 40px; border-radius: 20px; max-width: 450px; width: 90%;
+            text-align: center; box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+            transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active .modal-box { transform: translateY(0); }
+        .modal-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; }
+        .modal-desc { color: var(--text-secondary); margin-bottom: 32px; font-size: 1rem; }
+        .modal-actions { display: flex; gap: 16px; justify-content: center; }
+        .m-btn {
+            padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 0.95rem;
+            cursor: pointer; border: none; outline: none; transition: all 0.2s ease; flex: 1;
+        }
+        .m-btn-cancel { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .m-btn-cancel:hover { background: rgba(255,255,255,0.05); }
+        .m-btn-confirm { background: var(--text-primary); color: var(--bg-base); }
+        .m-btn-confirm:hover { background: #e2e8f0; transform: translateY(-2px); }
+
+        /* --- Intersection Observer Animations --- */
         .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .intro-grid { grid-template-columns: 1fr; gap: 32px; }
-            .footer-content { grid-template-columns: 1fr; gap: 40px; }
+            .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+            .footer-content { grid-template-columns: 1fr; gap: 48px; }
             .steam-grid { grid-template-columns: 1fr; }
+            .hero { padding-top: 140px; }
             .hero h1 { font-size: 3rem; }
             .studio-banner { margin-top: 40px; }
+            .services-header { text-align: left; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
         }
     </style>
 </head>
@@ -181,7 +213,7 @@
     <div class="bg-glow-alt"></div>
 
     <nav id="navbar">
-        <div class="logo-container">
+        <div class="logo-container" onclick="window.scrollTo(0,0)">
             <div class="logo">Finaltime</div>
             <div class="logo-sub">Studios</div>
         </div>
@@ -204,7 +236,7 @@
 
     <section class="studio-intro">
         <div class="intro-grid">
-            <h2 class="intro-title reveal">Evolution in Code & Art.</h2>
+            <h2 class="intro-title reveal">Evolution in<br>Code & Art.</h2>
             <div class="intro-text reveal">
                 <p>What originated as a pure game development venture has evolved into a multidisciplinary digital agency. <strong>Finaltime Studios</strong> engineers everything from psychological horror games and high-speed multiplayer experiences to sophisticated enterprise applications and bespoke web platforms.</p>
                 <br>
@@ -236,7 +268,7 @@
         
         <div class="portfolio-grid">
             
-            <a href="https://finaltimegames.github.io/langpro/" target="_blank" class="project-card reveal external-link">
+            <a href="https://finaltimegames.github.io/LangPro/" class="project-card reveal external-link">
                 <div class="img-wrapper"><div class="card-image" style="background-image: url('assets/langpro.jpg');"></div></div>
                 <div class="card-content">
                     <span class="card-category">Application / Tool</span>
@@ -272,7 +304,7 @@
                 </div>
             </div>
 
-            <a href="https://finaltimegames.github.io/dearend/" target="_blank" class="project-card reveal external-link">
+            <a href="https://finaltimegames.github.io/dearend/" class="project-card reveal external-link">
                 <div class="img-wrapper"><div class="card-image" style="background-image: url('assets/dearend.jpg');"></div></div>
                 <div class="card-content">
                     <span class="card-category">Visual Novel Engine</span>
@@ -281,7 +313,7 @@
                 </div>
             </a>
 
-            <a href="https://finaltimegames.github.io/DemandingLife/" target="_blank" class="project-card reveal external-link">
+            <a href="https://finaltimegames.github.io/DemandingLife/" class="project-card reveal external-link">
                 <div class="img-wrapper"><div class="card-image" style="background-image: url('assets/demanding.jpg');"></div></div>
                 <div class="card-content">
                     <span class="card-category">Game / Web Port</span>
@@ -290,7 +322,7 @@
                 </div>
             </a>
 
-            <a href="https://finaltimegames.github.io/tier-list/" target="_blank" class="project-card reveal external-link">
+            <a href="https://finaltimegames.github.io/tier-list/" class="project-card reveal external-link">
                 <div class="img-wrapper"><div class="card-image" style="background-image: url('assets/tierlist.jpg');"></div></div>
                 <div class="card-content">
                     <span class="card-category">Web Tool</span>
@@ -330,8 +362,10 @@
     </section>
 
     <section id="services" class="services">
-        <h2 class="services-title reveal">Engineering tailored solutions.</h2>
-        <p class="services-desc reveal">We apply our expertise in interactive engines, UI/UX architecture, and systems programming to build bespoke software for businesses and creators.</p>
+        <div class="services-header reveal">
+            <h2 class="services-title">Engineering tailored solutions.</h2>
+            <p class="services-desc">We apply our expertise in interactive engines, UI/UX architecture, and systems programming to build bespoke software for businesses and creators.</p>
+        </div>
         
         <div class="services-grid">
             <div class="service-item reveal">
@@ -380,6 +414,17 @@
         </div>
     </footer>
 
+    <div id="external-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 class="modal-title">Leaving Finaltime Studios</h3>
+            <p class="modal-desc">You are about to access a live interactive project in a new tab. Do you wish to proceed?</p>
+            <div class="modal-actions">
+                <button id="modal-cancel" class="m-btn m-btn-cancel">Cancel</button>
+                <button id="modal-confirm" class="m-btn m-btn-confirm">Proceed</button>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript" src="https://static.itch.io/api.js"></script>
     
     <script>
@@ -402,14 +447,33 @@
             }
         });
 
-        // --- 2. EXTERNAL LINK CONFIRMATION ---
+        // --- 2. CUSTOM MODAL LOGIC FOR EXTERNAL LINKS ---
+        const modal = document.getElementById('external-modal');
+        const btnCancel = document.getElementById('modal-cancel');
+        const btnConfirm = document.getElementById('modal-confirm');
+        let pendingUrl = '';
+
         document.querySelectorAll('.external-link').forEach(link => {
             link.addEventListener('click', (e) => {
-                const confirmed = confirm("You are about to leave this page to view the live project. Do you want to continue?");
-                if (!confirmed) {
-                    e.preventDefault(); // Cancela a abertura do link
-                }
+                e.preventDefault(); 
+                pendingUrl = link.getAttribute('href');
+                modal.classList.add('active');
             });
+        });
+
+        btnCancel.addEventListener('click', () => {
+            modal.classList.remove('active');
+            pendingUrl = '';
+        });
+
+        btnConfirm.addEventListener('click', () => {
+            if (pendingUrl) window.open(pendingUrl, '_blank');
+            modal.classList.remove('active');
+        });
+
+        // Close modal if user clicks outside the box
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
         });
 
         // --- 3. NAVBAR SCROLL EFFECT ---
