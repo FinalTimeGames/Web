@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finaltime Studios | From noise, we make games.</title>
+    <title>Finaltime Studios | From noise, we forge digital experiences.</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-base: #030303;
             --surface-dark: #0a0a0a;
             --surface-light: #121212;
-            --border-subtle: rgba(255, 255, 255, 0.05);
-            --accent-primary: #dc2626; /* A deep, edgy crimson */
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --accent-primary: #e11d48;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -30,19 +30,31 @@
         /* Abstract Noise Background */
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');
-            opacity: 0.04; z-index: -1; pointer-events: none;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');
+            opacity: 0.035; z-index: -1; pointer-events: none;
+        }
+
+        /* Ambient Glows */
+        .bg-glow {
+            position: fixed; top: -10%; left: -10%; width: 40vw; height: 40vw;
+            background: radial-gradient(circle, rgba(225, 29, 72, 0.08) 0%, transparent 60%);
+            filter: blur(100px); z-index: -1; pointer-events: none;
+        }
+        .bg-glow-alt {
+            position: fixed; bottom: -10%; right: -10%; width: 40vw; height: 40vw;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+            filter: blur(100px); z-index: -1; pointer-events: none;
         }
 
         /* Navigation */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 24px 8%; position: fixed; width: 100%; top: 0;
-            background: rgba(3, 3, 3, 0.7); backdrop-filter: blur(12px); z-index: 100;
+            background: rgba(3, 3, 3, 0.5); backdrop-filter: blur(16px); z-index: 100;
             border-bottom: 1px solid transparent;
             transition: var(--transition-smooth);
         }
-        nav.scrolled { padding: 16px 8%; background: rgba(3, 3, 3, 0.95); border-bottom: 1px solid var(--border-subtle); }
+        nav.scrolled { padding: 16px 8%; background: rgba(3, 3, 3, 0.9); border-bottom: 1px solid var(--border-subtle); }
         .logo-container { display: flex; flex-direction: column; }
         .logo { font-size: 1.4rem; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; }
         .logo span { color: var(--accent-primary); }
@@ -58,8 +70,8 @@
             padding: 0 8%; position: relative;
         }
         .hero-date { font-size: 0.8rem; font-weight: 600; color: var(--accent-primary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
-        .hero h1 { font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 900; line-height: 1; letter-spacing: -3px; margin-bottom: 32px; max-width: 1000px; }
-        .hero p { font-size: 1.25rem; color: var(--text-secondary); max-width: 600px; margin-bottom: 48px; font-weight: 300; }
+        .hero h1 { font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 900; line-height: 1.05; letter-spacing: -3px; margin-bottom: 32px; max-width: 1100px; }
+        .hero p { font-size: 1.25rem; color: var(--text-secondary); max-width: 650px; margin-bottom: 48px; font-weight: 300; }
         
         /* Studio Intro */
         .studio-intro { padding: 120px 8%; background: var(--surface-dark); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
@@ -74,39 +86,47 @@
         .section-header h2 { font-size: 3rem; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 16px; }
         .section-header p { color: var(--text-secondary); font-size: 1.1rem; }
         
-        .steam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)); gap: 40px; }
-        .steam-wrapper { background: var(--surface-light); padding: 20px; border-radius: 12px; border: 1px solid var(--border-subtle); transition: var(--transition-smooth); }
-        .steam-wrapper:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); }
+        .steam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 40px; }
+        .steam-wrapper { background: var(--surface-light); padding: 20px; border-radius: 16px; border: 1px solid var(--border-subtle); transition: var(--transition-smooth); }
+        .steam-wrapper:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
         .steam-wrapper iframe { width: 100%; height: 190px; border-radius: 8px; }
 
-        /* Itch.io Portfolio Grid */
+        /* Portfolio Grid */
         .portfolio { padding: 120px 8%; background: var(--surface-dark); }
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 32px; max-width: 1400px; margin: 0 auto; }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(315px, 1fr)); gap: 32px; max-width: 1400px; margin: 0 auto; }
         
         .project-card {
             background: var(--surface-light); border: 1px solid var(--border-subtle); border-radius: 12px; overflow: hidden;
             transition: var(--transition-smooth); cursor: pointer; display: flex; flex-direction: column;
+            text-decoration: none; color: inherit;
         }
         .project-card:hover { transform: translateY(-8px); border-color: var(--accent-primary); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
         
-        /* IMAGE PLACEHOLDERS - Needs user files */
-        .card-image { width: 100%; height: 200px; background-color: #1a1a1a; background-size: cover; background-position: center; border-bottom: 1px solid var(--border-subtle); }
+        /* STRICT IMAGE SIZING: 315x250 Enforced */
+        .card-image { 
+            width: 100%; 
+            aspect-ratio: 315 / 250; 
+            background-color: #111; 
+            background-size: cover; 
+            background-position: center; 
+            border-bottom: 1px solid var(--border-subtle); 
+        }
         
         .card-content { padding: 32px 24px; display: flex; flex-direction: column; flex: 1; }
         .card-category { font-size: 0.7rem; font-weight: 800; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
         .card-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 24px; letter-spacing: -0.5px; }
         
-        .card-btn { margin-top: auto; padding: 12px 0; background: transparent; border: 1px solid var(--border-subtle); color: var(--text-primary); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; border-radius: 6px; }
+        .card-btn { margin-top: auto; padding: 12px 0; text-align: center; background: transparent; border: 1px solid var(--border-subtle); color: var(--text-primary); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; border-radius: 6px; }
         .project-card:hover .card-btn { background: var(--text-primary); color: var(--bg-base); }
 
-        /* Services / Partnerships */
+        /* Services / Architecture */
         .services { padding: 160px 8%; max-width: 1400px; margin: 0 auto; text-align: center; }
-        .services-title { font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; letter-spacing: -2px; margin-bottom: 24px; }
+        .services-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; letter-spacing: -2px; margin-bottom: 24px; }
         .services-desc { font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 64px; }
         
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; text-align: left; }
         .service-item { padding: 40px; background: var(--surface-dark); border: 1px solid var(--border-subtle); border-radius: 12px; transition: var(--transition-smooth); }
-        .service-item:hover { background: var(--surface-light); border-color: rgba(255,255,255,0.2); }
+        .service-item:hover { background: var(--surface-light); border-color: rgba(255,255,255,0.15); transform: translateY(-5px); }
         .service-num { font-size: 0.8rem; font-weight: 800; color: var(--accent-primary); margin-bottom: 16px; display: block; }
         .service-item h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; }
         .service-item p { color: var(--text-secondary); font-size: 0.95rem; }
@@ -140,6 +160,8 @@
 <body>
 
     <div class="noise-overlay"></div>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-alt"></div>
 
     <nav id="navbar">
         <div class="logo-container">
@@ -147,32 +169,32 @@
             <div class="logo-sub">Studios</div>
         </div>
         <div class="nav-links">
-            <a href="#work">Work</a>
-            <a href="#services">Services</a>
-            <a href="#contact">Contact</a>
+            <a href="#work">Archive</a>
+            <a href="#services">Architecture</a>
+            <a href="#contact">Network</a>
         </div>
     </nav>
 
     <section class="hero">
         <span class="hero-date reveal">Est. Dec 2023 / Brazil</span>
-        <h1 class="reveal">From noise, we make games.</h1>
-        <p class="reveal">An independent studio forging dark aesthetics, complex systems, and complete digital solutions for the modern web and desktop.</p>
+        <h1 class="reveal">From noise, we forge digital experiences.</h1>
+        <p class="reveal">An independent studio engineering dark aesthetics, complex systems, and complete technological solutions for the modern web and desktop.</p>
     </section>
 
     <section class="studio-intro">
         <div class="intro-grid">
             <h2 class="intro-title reveal">Evolution in Code & Art.</h2>
             <div class="intro-text reveal">
-                <p>What started as a pure game development venture has evolved into a multidisciplinary digital studio. <strong>Finaltime Studios</strong> builds everything from psychological horror games and high-speed multiplayer experiences to sophisticated language learning applications and bespoke web platforms.</p>
+                <p>What originated as a pure game development venture has evolved into a multidisciplinary digital agency. <strong>Finaltime Studios</strong> engineers everything from psychological horror games and high-speed multiplayer experiences to sophisticated enterprise applications and bespoke web platforms.</p>
                 <br>
-                <p>Whether crafting custom interactive wallpapers on demand or deploying production-ready software like LangPro, we blend technical rigor with an unmistakable, atmospheric identity.</p>
+                <p>Whether crafting custom interactive systems on demand or deploying production-ready software like LangPro, we blend technical rigor with an unmistakable, atmospheric identity.</p>
             </div>
         </div>
     </section>
 
     <section id="work" class="steam-highlights">
         <div class="section-header reveal">
-            <h2>Featured Releases</h2>
+            <h2>Flagship Releases</h2>
             <p>Available now on Steam.</p>
         </div>
         <div class="steam-grid">
@@ -188,99 +210,110 @@
     <section class="portfolio">
         <div class="section-header reveal" style="max-width: 1400px; margin: 0 auto 64px;">
             <h2>The Archive</h2>
-            <p>Our complete library of applications, tools, and indie games.</p>
+            <p>Our complete library of applications, development tools, and indie titles.</p>
         </div>
         
         <div class="portfolio-grid">
-            <div class="project-card reveal" onclick="document.getElementById('btn-langpro').click()">
+            
+            <div class="project-card reveal" id="btn-langpro">
                 <div class="card-image" style="background-image: url('assets/langpro.jpg');"></div>
                 <div class="card-content">
                     <span class="card-category">Application / Tool</span>
                     <h3 class="card-title">LangPro 7.0</h3>
-                    <button id="btn-langpro" class="card-btn">View Project</button>
+                    <div class="card-btn">View Project</div>
                 </div>
             </div>
 
-            <div class="project-card reveal" onclick="document.getElementById('btn-dearend').click()">
+            <div class="project-card reveal" id="btn-reaper">
+                <div class="card-image" style="background-image: url('assets/reaperrules.jpg');"></div>
+                <div class="card-content">
+                    <span class="card-category">Game</span>
+                    <h3 class="card-title">Reaper Rules</h3>
+                    <div class="card-btn">View Project</div>
+                </div>
+            </div>
+
+            <a href="https://finaltimegames.github.io/dearend/" target="_blank" class="project-card reveal">
                 <div class="card-image" style="background-image: url('assets/dearend.jpg');"></div>
                 <div class="card-content">
                     <span class="card-category">Visual Novel Engine</span>
                     <h3 class="card-title">Dear End</h3>
-                    <button id="btn-dearend" class="card-btn">View Project</button>
+                    <div class="card-btn">Access Platform</div>
                 </div>
-            </div>
+            </a>
 
-            <div class="project-card reveal" onclick="document.getElementById('btn-demanding').click()">
+            <a href="https://finaltimegames.github.io/DemandingLife/" target="_blank" class="project-card reveal">
                 <div class="card-image" style="background-image: url('assets/demanding.jpg');"></div>
                 <div class="card-content">
-                    <span class="card-category">Game</span>
+                    <span class="card-category">Game / Web Port</span>
                     <h3 class="card-title">Demanding Life</h3>
-                    <button id="btn-demanding" class="card-btn">View Project</button>
+                    <div class="card-btn">Play Now</div>
                 </div>
-            </div>
+            </a>
 
-            <div class="project-card reveal" onclick="document.getElementById('btn-luz').click()">
-                <div class="card-image" style="background-image: url('assets/luz.jpg');"></div>
-                <div class="card-content">
-                    <span class="card-category">Game</span>
-                    <h3 class="card-title">Luz de Ferra</h3>
-                    <button id="btn-luz" class="card-btn">View Project</button>
-                </div>
-            </div>
-
-            <div class="project-card reveal" onclick="document.getElementById('btn-celebration').click()">
-                <div class="card-image" style="background-image: url('assets/celebration.jpg');"></div>
-                <div class="card-content">
-                    <span class="card-category">Game</span>
-                    <h3 class="card-title">Finaltime Celebration</h3>
-                    <button id="btn-celebration" class="card-btn">View Project</button>
-                </div>
-            </div>
-
-            <div class="project-card reveal" onclick="document.getElementById('btn-shader').click()">
-                <div class="card-image" style="background-image: url('assets/shader.jpg');"></div>
-                <div class="card-content">
-                    <span class="card-category">Dev Asset</span>
-                    <h3 class="card-title">AestheticRetroShader</h3>
-                    <button id="btn-shader" class="card-btn">View Project</button>
-                </div>
-            </div>
-
-            <div class="project-card reveal" onclick="document.getElementById('btn-tierlist').click()">
+            <a href="https://finaltimegames.github.io/tier-list/" target="_blank" class="project-card reveal">
                 <div class="card-image" style="background-image: url('assets/tierlist.jpg');"></div>
                 <div class="card-content">
                     <span class="card-category">Web Tool</span>
                     <h3 class="card-title">Tier List Maker</h3>
-                    <button id="btn-tierlist" class="card-btn">View Project</button>
+                    <div class="card-btn">Access Tool</div>
+                </div>
+            </a>
+
+            <div class="project-card reveal" id="btn-luz">
+                <div class="card-image" style="background-image: url('assets/luz.jpg');"></div>
+                <div class="card-content">
+                    <span class="card-category">Game</span>
+                    <h3 class="card-title">Luz de Ferra</h3>
+                    <div class="card-btn">View Project</div>
                 </div>
             </div>
+
+            <div class="project-card reveal" id="btn-celebration">
+                <div class="card-image" style="background-image: url('assets/celebration.jpg');"></div>
+                <div class="card-content">
+                    <span class="card-category">Game</span>
+                    <h3 class="card-title">Celebration</h3>
+                    <div class="card-btn">View Project</div>
+                </div>
+            </div>
+
+            <div class="project-card reveal" id="btn-shader">
+                <div class="card-image" style="background-image: url('assets/shader.jpg');"></div>
+                <div class="card-content">
+                    <span class="card-category">Dev Asset</span>
+                    <h3 class="card-title">Retro Shader</h3>
+                    <div class="card-btn">View Project</div>
+                </div>
+            </div>
+
         </div>
     </section>
 
     <section id="services" class="services">
-        <h2 class="services-title reveal">More than just play.</h2>
-        <p class="services-desc reveal">We apply our expertise in game engines, UI/UX architecture, and interactive media to build tailored solutions for businesses and creators.</p>
+        <h2 class="services-title reveal">Engineering tailored solutions.</h2>
+        <p class="services-desc reveal">We apply our expertise in interactive engines, UI/UX architecture, and systems programming to build bespoke software for businesses and creators.</p>
         
         <div class="services-grid">
             <div class="service-item reveal">
                 <span class="service-num">01</span>
                 <h3>Custom Applications</h3>
-                <p>Native and hybrid app development using modern web technologies, just like LangPro.</p>
+                <p>Native and hybrid app development using modern web technologies, delivering robust products like LangPro.</p>
             </div>
             <div class="service-item reveal">
                 <span class="service-num">02</span>
                 <h3>Web Architecture</h3>
-                <p>High-performance websites and landing pages optimized for conversion and aesthetics.</p>
+                <p>High-performance websites, landing pages, and interactive web-apps optimized for conversion and aesthetics.</p>
             </div>
             <div class="service-item reveal">
                 <span class="service-num">03</span>
-                <h3>Promotional Games</h3>
-                <p>Ad games and interactive web experiences designed to engage your specific target audience.</p>
+                <h3>Promotional Software</h3>
+                <p>Ad games, gamified systems, and interactive web experiences designed to engage your specific target audience.</p>
             </div>
             <div class="service-item reveal">
                 <span class="service-num">04</span>
                 <h3>Interactive Arts</h3>
-                <p>From personalized on-demand interactive wallpapers to bespoke digital design assets.</p>
+                <p>From personalized on-demand interactive wallpapers to bespoke digital design assets and shaders.</p>
             </div>
         </div>
     </section>
@@ -289,58 +322,56 @@
         <div class="footer-content reveal">
             <div class="footer-brand">
                 <h2>Finaltime.</h2>
-                <p>Ready to forge something unique? We are currently open for partnerships, custom services, and new projects.</p>
+                <p>Ready to forge something unique? We are currently open for partnerships, custom technical services, and new ventures.</p>
             </div>
             <div class="footer-links">
-                <span>Direct Contact</span>
+                <span>Direct Inquiries</span>
                 <a href="mailto:finaltimestudios@gmail.com">finaltimestudios@gmail.com</a>
                 
                 <span style="margin-top: 32px;">Network</span>
                 <a href="https://store.steampowered.com/franchise/finaltime?l=" target="_blank">Steam Franchise</a>
-                <a href="https://finaltime-game-studio.itch.io/" target="_blank">Itch.io Page</a>
-                <a href="https://www.youtube.com/@FinalTimeGames" target="_blank">YouTube</a>
-                <a href="https://x.com/FinalTimeGames" target="_blank">X (Twitter)</a>
+                <a href="https://finaltime-game-studio.itch.io/" target="_blank">Itch.io Hub</a>
+                <a href="https://www.youtube.com/@FinalTimeGames" target="_blank">YouTube Archive</a>
+                <a href="https://x.com/FinalTimeGames" target="_blank">X (Twitter) Updates</a>
             </div>
         </div>
         <div class="footer-bottom reveal">
-            <p>&copy; 2026 Finaltime Game Studio. All rights reserved.</p>
-            <p>Based in Brazil.</p>
+            <p>&copy; 2026 Finaltime Studios. All rights reserved.</p>
+            <p>Architected in Brazil.</p>
         </div>
     </footer>
 
     <script type="text/javascript" src="https://static.itch.io/api.js"></script>
     
     <script>
-        // Itch.io Buy Button Integrations
-        const baseConfig = { user: "finaltime-game-studio", width: 800, height: 600 };
+        // Itch.io Pop-up Integrations for specific cards
+        const baseConfig = { user: "finaltime-game-studio", width: 850, height: 600 };
         
-        const products = [
+        const itchProducts = [
             { id: "btn-langpro", slug: "langpro" },
-            { id: "btn-dearend", slug: "dearend" },
-            { id: "btn-demanding", slug: "demanding-life" },
+            { id: "btn-reaper", slug: "reaper-rules" },
             { id: "btn-luz", slug: "luz-de-ferra" },
             { id: "btn-celebration", slug: "finaltime-celebration" },
-            { id: "btn-shader", slug: "aestheticretroshader" },
-            { id: "btn-tierlist", slug: "tier-list-maker" }
+            { id: "btn-shader", slug: "aestheticretroshader" }
         ];
 
-        products.forEach(prod => {
-            const btn = document.getElementById(prod.id);
-            if(btn) {
-                Itch.attachBuyButton(btn, { ...baseConfig, game: prod.slug });
+        itchProducts.forEach(prod => {
+            const card = document.getElementById(prod.id);
+            if(card) {
+                Itch.attachBuyButton(card, { ...baseConfig, game: prod.slug });
             }
         });
 
-        // Navbar Scroll Effect
+        // Dynamic Navbar Scroll Effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) navbar.classList.add('scrolled');
             else navbar.classList.remove('scrolled');
         }, { passive: true });
 
-        // High-Performance Scroll Reveal (Intersection Observer)
+        // High-Performance Intersection Observer for Scroll Reveals
         const revealElements = document.querySelectorAll('.reveal');
-        const revealOptions = { root: null, rootMargin: '0px 0px -100px 0px', threshold: 0.1 };
+        const revealOptions = { root: null, rootMargin: '0px 0px -80px 0px', threshold: 0.1 };
 
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
