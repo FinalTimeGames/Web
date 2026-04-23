@@ -370,6 +370,15 @@
                 </div>
             </div>
 
+            <div class="project-card reveal" id="btn-framebeat">
+                <div class="img-wrapper"><div class="card-image" style="background-image: url('assets/framebeat.jpg');"></div></div>
+                <div class="card-content">
+                    <span class="card-category">Audio Editor</span>
+                    <h3 class="card-title">FrameBeat</h3>
+                    <div class="card-btn">View Project</div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -441,11 +450,13 @@
         // --- 1. ITCH.IO POP-UP INTEGRATION (Direct specific cards only) ---
         const baseConfig = { user: "finaltime-game-studio", width: 850, height: 600 };
         
+        // FRAMEBEAT ADICIONADO AQUI NO ARRAY
         const itchProducts = [
             { id: "btn-dinotauro", slug: "dinotauro-wallpaper" },
             { id: "btn-luz", slug: "luz-de-ferra" },
             { id: "btn-celebration", slug: "finaltime-celebration" },
-            { id: "btn-shader", slug: "aestheticretroshader" }
+            { id: "btn-shader", slug: "aestheticretroshader" },
+            { id: "btn-framebeat", slug: "framebeat" } 
         ];
 
         itchProducts.forEach(prod => {
